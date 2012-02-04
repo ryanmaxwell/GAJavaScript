@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2010 Andrew Goodale. All rights reserved.
+ Copyright (c) 2010-2012 Andrew Goodale. All rights reserved.
  
  Redistribution and use in source and binary forms, with or without modification, are
  permitted provided that the following conditions are met:
@@ -28,7 +28,7 @@
 
 #import <UIKit/UIKit.h>
 
-static NSString* const GAJavaScriptErrorDomain;
+@class GAScriptEngine;
 
 /*
  * This class provides an Objective-C interface to a JavaScript Object.
@@ -40,7 +40,7 @@ static NSString* const GAJavaScriptErrorDomain;
 	NSString*       m_objReference;
 	
 	/* The javascript "engine" */
-	UIWebView*      m_webView;
+	GAScriptEngine* m_engine;
     
     /* Set of block objects for callbacks */
     NSMutableSet*   m_blocks;
@@ -49,7 +49,7 @@ static NSString* const GAJavaScriptErrorDomain;
 /*
  * Designated initializer.
  */
-- (id)initForReference:(NSString *)reference view:(UIWebView *)webView;
+- (id)initForReference:(NSString *)reference withEngine:(GAScriptEngine *)engine;
 	
 /*
  * Array containing the names of all the JS properties.
@@ -84,7 +84,7 @@ static NSString* const GAJavaScriptErrorDomain;
 - (id)valueForKey:(NSString *)key;
 
 /*
- * Used for assignment
+ * Sets a value with the given name.
  */
 - (void)setValue:(id)value forKey:(NSString *)key;
 
@@ -92,5 +92,10 @@ static NSString* const GAJavaScriptErrorDomain;
  * Read a value from an object using a property path.
  */
 - (id)valueForKeyPath:(NSString *)keyPath;
+
+/*
+ * Sets the value of a child object using a property path.
+ */
+- (void)setValue:(id)value forKeyPath:(NSString *)keyPath;
 
 @end
