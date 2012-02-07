@@ -113,7 +113,8 @@ static NSString* const GAJavaScriptErrorLine   = @"JSErrorLine";
 {
     [m_webView release];
     [m_receivers release];
-    
+    [m_blocks release];
+ 
     [super dealloc];
 }
 
@@ -255,6 +256,16 @@ static NSString* const GAJavaScriptErrorLine   = @"JSErrorLine";
 	return [NSError errorWithDomain:GAJavaScriptErrorDomain code:101 userInfo:dict];	
 }
 
+#pragma mark Blocks
+
+- (void)addBlockCallback:(GAScriptBlockObject *)blockObject
+{
+    if (m_blocks == nil)
+        m_blocks = [[NSMutableDictionary alloc] initWithCapacity:8];
+    
+    [m_blocks setObject:blockObject.block forKey:blockObject.blockId];
+}
+
 #pragma mark Private
 
 - (void)loadScriptRuntime
@@ -298,11 +309,11 @@ static NSString* const GAJavaScriptErrorLine   = @"JSErrorLine";
 			SEL theSelector = NSSelectorFromString(selName);
 			[self callReceiversForSelector:theSelector withArguments:arguments];
 		}
-		else if (invName != nil && [invName isKindOfClass:[NSNumber class]])
+		else if (invName != nil && [invName isKindOfClass:[NSString class]])
 		{
-            // Will be the address of a block
+            // Will be the ID of a block object
             //
-            GAScriptBlock theBlock = (GAScriptBlock) [invName unsignedLongLongValue];
+            GAScriptBlock theBlock = [m_blocks objectForKey:invName];
             
             if (theBlock)
                 theBlock(arguments);
@@ -370,7 +381,7 @@ static NSString* const GAJavaScriptErrorLine   = @"JSErrorLine";
 	if ([m_delegate respondsToSelector:@selector(webView:shouldStartLoadWithRequest:navigationType:)])
 		return [m_delegate webView:webView shouldStartLoadWithRequest:request navigationType:navigationType];
 	
-    // TODO: Only YES for the inital HTML page
+    // Reloading is fine otherwise - we'll make sure the script engine is loaded in the new page.
     return YES;
 }
 

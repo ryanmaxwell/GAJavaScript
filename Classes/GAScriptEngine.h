@@ -43,6 +43,9 @@ static NSString* const GAJavaScriptErrorDomain;
 	id<UIWebViewDelegate>	m_delegate;
         
     NSMutableArray*			m_receivers;
+
+    /* A dictionary of NSString->Block */
+    NSMutableDictionary*    m_blocks;
 }
 
 /**

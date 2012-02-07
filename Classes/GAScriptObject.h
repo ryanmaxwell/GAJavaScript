@@ -30,7 +30,7 @@
 
 @class GAScriptEngine;
 
-/*
+/**
  * This class provides an Objective-C interface to a JavaScript Object.
  */
 @interface GAScriptObject : NSObject 
@@ -41,35 +41,39 @@
 	
 	/* The javascript "engine" */
 	GAScriptEngine* m_engine;
-    
-    /* Set of block objects for callbacks */
-    NSMutableSet*   m_blocks;
 }
 
-/*
+/**
  * Designated initializer.
  */
 - (id)initForReference:(NSString *)reference withEngine:(GAScriptEngine *)engine;
 	
-/*
+/**
  * Array containing the names of all the JS properties.
  */
 - (NSArray *)allKeys;
 
-/*
+/**
  * Call a function with no arguments on this object.
  */
 - (id)callFunction:(NSString *)functionName;
 
-/*
+/**
  * Call a function on this object, with a single argument.
  */
 - (id)callFunction:(NSString *)functionName withObject:(id)argument;
 
-/*
+/**
  * Call a function on this object, with a single argument.
  */
 - (id)callFunction:(NSString *)functionName withArguments:(NSArray *)arguments;
+
+/**
+ * Creates a JavaScript function that will invoke the given block when called. The block will be copied
+ * and a reference managed by this script object instance. Make sure your block is on the heap if it's
+ * needed after this script object is deallocated.
+ */
+- (void)setFunctionForKey:(NSString *)key withBlock:(void(^)(NSArray* arguments))block;
 
 @end
 
@@ -77,23 +81,23 @@
 
 @interface GAScriptObject (NSKeyValueCoding)
 
-/*
+/**
  * Read a value (or object) with the given name.
  * If the value cannot be retrieved because of a JS syntax error or exception, an NSError value is returned.
  */
 - (id)valueForKey:(NSString *)key;
 
-/*
+/**
  * Sets a value with the given name.
  */
 - (void)setValue:(id)value forKey:(NSString *)key;
 
-/*
+/**
  * Read a value from an object using a property path.
  */
 - (id)valueForKeyPath:(NSString *)keyPath;
 
-/*
+/**
  * Sets the value of a child object using a property path.
  */
 - (void)setValue:(id)value forKeyPath:(NSString *)keyPath;

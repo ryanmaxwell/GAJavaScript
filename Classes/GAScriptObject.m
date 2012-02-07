@@ -29,6 +29,7 @@
 #import "GAScriptObject.h"
 #import "GAScriptEngine.h"
 #import "GAScriptMethodSignatures.h"
+#import "GAScriptBlockObject.h"
 #import "NSObject+GAJavaScript.h"
 
 typedef struct /* GAScriptObjectEnumState */
@@ -72,7 +73,6 @@ typedef struct /* GAScriptObjectEnumState */
 {
 	[self releaseReference];
 	[m_objReference release];
-    [m_blocks release];
 	
 	[super dealloc];
 }
@@ -148,6 +148,20 @@ typedef struct /* GAScriptObjectEnumState */
 {	
 	return [m_engine evalWithFormat:@"GAJavaScript.callFunction(%@.%@, %@, %@)", 
                         m_objReference, functionName, m_objReference, [arguments stringForJavaScript]];	
+}
+
+- (void)setFunctionForKey:(NSString *)key withBlock:(void(^)(NSArray* arguments))block
+{
+    GAScriptBlockObject* theBlock = [[GAScriptBlockObject alloc] initWithBlock:block];
+    
+    [self setValue:theBlock forKey:key];
+    
+    // Save the block object so that we can keep the block alive while this object is used.
+    // The block might be stack-based, which would likely go out-of-scope before the callback
+    // is received.
+    //
+    [m_engine addBlockCallback:theBlock];
+    [theBlock release];
 }
 
 #pragma mark GAScriptObject (NSKeyValueCoding)
