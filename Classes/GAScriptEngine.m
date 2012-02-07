@@ -170,12 +170,21 @@ static NSString* const GAJavaScriptErrorLine   = @"JSErrorLine";
 
 - (id)callFunction:(NSString *)functionName withObject:(id)argument
 {
+    if ([argument isKindOfClass:[GAScriptBlockObject class]])
+    {
+        [self addBlockCallback:argument];
+    }
 	return [self evalWithFormat:@"GAJavaScript.callFunction(%@, window, [%@])", 
                         functionName, [argument stringForJavaScript]];	
 }
 
 - (id)callFunction:(NSString *)functionName withArguments:(NSArray *)arguments
 {	
+    for (id arg in arguments)
+    {
+        if ([arg isKindOfClass:[GAScriptBlockObject class]])
+            [self addBlockCallback:arg];        
+    }
 	return [self evalWithFormat:@"GAJavaScript.callFunction(%@, window, %@)", 
                         functionName, [arguments stringForJavaScript]];		
 }

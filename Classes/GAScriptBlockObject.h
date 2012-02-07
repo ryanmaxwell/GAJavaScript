@@ -32,8 +32,8 @@
 typedef void (^GAScriptBlock)(NSArray *);
 
 /**
- * Wraps a block so it can be called from JavaScript. Not public right now,
- * but it could be useful for allowing people to use in their own classes.
+ * Wraps a block so it can be called from JavaScript. This opbject can be used to pass
+ * blocks as arguments to JavaScript function calls.
  */
 @interface GAScriptBlockObject : NSObject
 {

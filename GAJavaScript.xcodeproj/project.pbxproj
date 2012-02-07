@@ -15,7 +15,7 @@
 		2D1445BF142BD95D00465EB3 /* GAScriptBlockObject.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D81DF5D139D796900CA599F /* GAScriptBlockObject.h */; };
 		2D1445C0142BD98E00465EB3 /* GADebugMacros.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2D9106E31427E5F0002062A1 /* GADebugMacros.h */; };
 		2D5994871382B0F0006B728D /* TScriptEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5994861382B0F0006B728D /* TScriptEngine.m */; };
-		2D81DF5F139D796900CA599F /* GAScriptBlockObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 2D81DF5D139D796900CA599F /* GAScriptBlockObject.h */; settings = {ATTRIBUTES = (); }; };
+		2D81DF5F139D796900CA599F /* GAScriptBlockObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 2D81DF5D139D796900CA599F /* GAScriptBlockObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2D8500AE1381647F00758EA2 /* GAScriptEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 2D8500AC1381647F00758EA2 /* GAScriptEngine.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2D8500AF1381647F00758EA2 /* GAScriptEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D8500AD1381647F00758EA2 /* GAScriptEngine.m */; };
 		2D8500B213816B2100758EA2 /* TestWebViewContent.html in Resources */ = {isa = PBXBuildFile; fileRef = 2D8500B113816B2100758EA2 /* TestWebViewContent.html */; };
